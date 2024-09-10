@@ -32,7 +32,30 @@ int main() {
 
 // Function to convert a matrix into sparse matrix format
 void createSparseMatrix(int sparseMatrix[][3], int originalMatrix[][N], int rows, int cols) {
-    //WRITE THE FUNCTION DESCRIPTION HERE
+    void createSparseMatrix(int sparseMatrix[][3], int originalMatrix[][N], int rows, int cols) {
+    int nonZeroCount = 0;
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (originalMatrix[i][j] != 0) {
+                sparseMatrix[nonZeroCount][0] = i;   // Row index
+                sparseMatrix[nonZeroCount][1] = j;   // Column index
+                sparseMatrix[nonZeroCount][2] = originalMatrix[i][j]; // Value
+                nonZeroCount++;
+            }
+        }
+    }
+
+    sparseMatrix[0][0] = rows;  // Store the number of rows
+    sparseMatrix[0][1] = cols;  // Store the number of columns
+    sparseMatrix[0][2] = nonZeroCount;  // Store the number of non-zero elements
+
+    // Handle the case where the number of non-zero elements exceeds the maximum allowed
+    if (nonZeroCount > MAX) {
+        printf("Error: Too many non-zero elements in the original matrix.\n");
+        exit(1);
+    }
+}
     
 
 
@@ -48,7 +71,15 @@ void createSparseMatrix(int sparseMatrix[][3], int originalMatrix[][N], int rows
 void printSparseMatrix(int sparseMatrix[][3], int nonZeroCount) {
     //WRITE THE FUNCTION DESCRIPTION HERE
     
+void printSparseMatrix(int sparseMatrix[][3], int nonZeroCount) {
+    printf("Sparse Matrix Representation:\n");
+    printf("Rows: %d, Columns: %d, Non-zero elements: %d\n",
+           sparseMatrix[0][0], sparseMatrix[0][1], sparseMatrix[0][2]);
 
+    for (int i = 1; i <= nonZeroCount; i++) {
+        printf("%d %d %d\n", sparseMatrix[i][0], sparseMatrix[i][1], sparseMatrix[i][2]);
+    }
+}
 
 
 
